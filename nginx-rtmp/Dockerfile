@@ -49,6 +49,8 @@ RUN buildDeps="build-essential \
         apt-get install -yq --no-install-recommends ${buildDeps} ca-certificates && \
         DIR=$(mktemp -d) && cd ${DIR}
 
+# Para debug, añadir --with-debug de la linea de configuracion
+#        ./configure --with-debug --with-http_ssl_module --with-http_v2_module --add-module=../nginx-rtmp-module-master;\
 # Install nginx with RTMP
 RUN mkdir /tmp/working && cd /tmp/working;\
         wget http://nginx.org/download/${NGINX_VERSION}.tar.gz;\
@@ -90,6 +92,7 @@ ADD stat.xsl /var/www/HLS/stat.xsl
 ADD html/* /var/www/
 
 RUN mkdir /streams
+RUN mkdir /streams/video
 RUN chmod 0777 /streams
 
 ADD postInstall.sh /postInstall.sh
