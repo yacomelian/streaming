@@ -6,19 +6,15 @@ FROM       ubuntu:16.04
 FROM       jrottenberg/ffmpeg:latest
 
 # Format: MAINTAINER Name <email@addr.ess>
-MAINTAINER YacoMelian <@> github.com
+MAINTAINER yacomelian <@> gmail.com
 
 ENTRYPOINT ["/bin/sh", "-c", "/postInstall.sh"]
 
 WORKDIR /tmp/workdir
 
 # VARIABLES
-# ENV NGINX_VERSION=nginx-1.9.2
-#ENV NGINX_VERSION=nginx-1.11.3
 ENV NGINX_VERSION=nginx-1.11.4 \
     DEBIAN_FRONTEND=noninteractive
-#ENV DEBIAN_FRONTEND=noninteractive \
-#            NGINX_VERSION=nginx-1.11.4 \
 #	    FFMPEG_VERSION=3.1.3 \
 #            FAAC_VERSION=1.28    \
 #            FDKAAC_VERSION=0.1.4 \
@@ -39,7 +35,6 @@ ENV NGINX_VERSION=nginx-1.11.4 \
   
 RUN apt-get -yqq update;
 RUN apt-get install -yqq apt-utils;
-#\
 RUN apt-get install -yqq wget unzip
 
 RUN buildDeps="build-essential \
@@ -49,7 +44,7 @@ RUN buildDeps="build-essential \
         apt-get install -yq --no-install-recommends ${buildDeps} ca-certificates && \
         DIR=$(mktemp -d) && cd ${DIR}
 
-# Para debug, añadir --with-debug de la linea de configuracion
+# Debug, add --with-debug in configure
 #        ./configure --with-debug --with-http_ssl_module --with-http_v2_module --add-module=../nginx-rtmp-module-master;\
 # Install nginx with RTMP
 RUN mkdir /tmp/working && cd /tmp/working;\
@@ -69,7 +64,6 @@ RUN apt-get -yqq install git bc;
 RUN git clone https://github.com/letsencrypt/letsencrypt /opt/letsencrypt;
 
 # ADD nginx_sites-available_default /etc/nginx/sites-available/default
-
 RUN openssl dhparam -out /etc/ssl/certs/dhparam.pem 2048
 
 # Install daemon
